@@ -128,7 +128,44 @@ const drawOnCanvas = (e) => {
     });
   };
 
-  const renderYesNo = (name) => (
+ const renderYesNo = (name, style = 'buttons') => {
+    if (style === 'form-check') {
+      return (
+        <div className="d-flex gap-4">
+          <div className="form-check form-check-inline">
+            <input
+              className="form-check-input"
+              type="radio"
+              name={name}
+              id={`${name}-yes`}
+              value="Yes"
+              checked={formData[name] === 'Yes'}
+              onChange={handleChange}
+            />
+            <label className="form-check-label" htmlFor={`${name}-yes`}>
+              Yes
+            </label>
+          </div>
+          <div className="form-check form-check-inline">
+            <input
+              className="form-check-input"
+              type="radio"
+              name={name}
+              id={`${name}-no`}
+              value="No"
+              checked={formData[name] === 'No'}
+              onChange={handleChange}
+            />
+            <label className="form-check-label" htmlFor={`${name}-no`}>
+              No
+            </label>
+          </div>
+        </div>
+      );
+    }
+
+  // default button-style
+  return (
     <div
       className="btn-group btn-group-sm"
       role="group"
@@ -145,7 +182,9 @@ const drawOnCanvas = (e) => {
         checked={formData[name] === 'Yes'}
         onChange={handleChange}
       />
-      <label className="btn btn-outline-primary" htmlFor={`${name}-yes`}>Yes</label>
+      <label className="btn btn-outline-primary" htmlFor={`${name}-yes`}>
+        Yes
+      </label>
 
       <input
         type="radio"
@@ -157,9 +196,13 @@ const drawOnCanvas = (e) => {
         checked={formData[name] === 'No'}
         onChange={handleChange}
       />
-      <label className="btn btn-outline-primary" htmlFor={`${name}-no`}>No</label>
+      <label className="btn btn-outline-primary" htmlFor={`${name}-no`}>
+        No
+      </label>
     </div>
   );
+};
+
 
   const handleChange = (e) => {
     const { name, type, checked, value } = e.target;
@@ -195,7 +238,7 @@ const drawOnCanvas = (e) => {
 
 return (
   <>
-    <nav className="navbar navbar-dark bg-primary mb-4">
+    <nav className="navbar navbar-dark bg-primary mb-4 sticky-top shadow" >
       <div className="d-flex justify-content-center w-100">
         <span className="navbar-brand mb-0 h1 d-flex align-items-center">
           <img
@@ -339,15 +382,17 @@ return (
               // SECTION 2: Business Details (Original Form)
               <div>
                 <div className="card bg-secondary mb-3">
-                 <div className="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+                 <div className="card-header bg-light d-flex justify-content-between align-items-center">
                   <h4 className="mb-0">Section 2: Business Details</h4>
                   <button 
-                    className="class= btn btn-outline"
+                    className="btn btn-light text-dark gray"
                     onClick={() => setSectionOneComplete(false)}
                   >
                     ← Edit Section 1
                   </button>
                 </div>
+
+
                   <div className="card-body">
                     <form onSubmit={handleSubmit}>
                       {/* 1. RV RENTALS */}
@@ -372,7 +417,7 @@ return (
                               </label>
                             </div>
                             <div style={{ width: '150px' }}>
-                              {renderYesNo('rentRVsInsured')}
+                              {renderYesNo('rentRVsInsured' , 'form-check')}
                             </div>
                           </div>
 
@@ -384,7 +429,7 @@ return (
                               </label>
                             </div>
                             <div style={{ width: '150px' }}>
-                              {renderYesNo('rentRVsInventory')}
+                              {renderYesNo('rentRVsInventory' , 'form-check')}
                             </div>
                           </div>
                         </div>
@@ -440,7 +485,7 @@ return (
                             </label>
                           </div>
                           <div style={{ width: '150px' }}>
-                            {renderYesNo('rvParkGLCoverage')}
+                            {renderYesNo('rvParkGLCoverage' , 'form-check' )}
                           </div>
                         </div>
                       )}
@@ -465,7 +510,7 @@ return (
                             <label className="form-label mb-0">a] Is the storage tank protected by collision barriers?</label>
                           </div>
                           <div style={{ width: '150px' }}>
-                            {renderYesNo('lpgCollisionBarriers')}
+                            {renderYesNo('lpgCollisionBarriers' , 'form-check')}
                           </div>
                         </div>
 
@@ -475,7 +520,7 @@ return (
                             <label className="form-label mb-0">b] Are "No Smoking" signs posted?</label>
                           </div>
                           <div style={{ width: '150px' }}>
-                            {renderYesNo('lpgNoSmoking')}
+                            {renderYesNo('lpgNoSmoking' , 'form-check')}
                           </div>
                         </div>
 
@@ -485,7 +530,7 @@ return (
                             <label className="form-label mb-0">c] Do only qualified operators fill customer's tanks?</label>
                           </div>
                           <div style={{ width: '150px' }}>
-                            {renderYesNo('lpgQualifiedOperators')}
+                            {renderYesNo('lpgQualifiedOperators' , 'form-check')}
                           </div>
                         </div>
 
@@ -640,46 +685,94 @@ return (
                       </div>
                       <div className="mb-3">
                         <label className="form-label">b] Are hitches always bolted to the frame?</label>
-                        {renderYesNo('hitchesBolted')}
+                        <div style={{ width: '150px' }}>
+                              {renderYesNo('hitchesBolted' , 'form-check')}
+                        </div>
                       </div>
                       <div className="mb-3">
                         <label className="form-label">c] Is all welding done by a certified welder?</label>
-                        {renderYesNo('weldingCertified')}
+                        <div style={{ width: '150px' }}>
+                              {renderYesNo('weldingCertified' , 'form-check')}
+                        </div>
                       </div>
 
                       {/* 8. RV TRADE SHOWS */}
-                      <h5 className="mt-4">8. Do you participate in RV Trade Shows?</h5>
-                      <div className="mb-3">
-                        <div className="form-check">
-                          <input className="form-check-input" type="checkbox" name="rvTradeShows" checked={formData.rvTradeShows} onChange={handleChange} />
-                          <label className="form-check-label">Yes</label>
+                      <div className="row align-items-center mb-3">
+                        <div className="col-md-10">
+                          <h5 className="mb-0">8. Do you participate in RV Trade Shows?</h5>
+                        </div>
+                        <div className="col-md-2">
+                          {renderYesNo('rvTradeShows')}
                         </div>
                       </div>
-                      {formData.rvTradeShows && (
-                        <div className="ms-4">
-                          <div className="mb-3">
-                            <div className="form-check">
-                              <input className="form-check-input" type="checkbox" name="tradeShowDrive" checked={formData.tradeShowDrive} onChange={handleChange} />
-                              <label className="form-check-label">Do you drive your owned RV(s) to the trade shows?</label>
+
+                      {formData.rvTradeShows === 'Yes' && (
+                        <div className="ms-5">
+                          {/* a */}
+                          <div className="d-flex align-items-center mb-3">
+                            <div className="me-3" style={{ width: '700px' }}>
+                              <label className="form-label mb-0">
+                                a] Do you drive your owned RV(s) to the trade shows?
+                              </label>
+                            </div>
+                            <div style={{ width: '150px' }}>
+                              <div className="form-check">
+                                <input
+                                  className="form-check-input"
+                                  type="checkbox"
+                                  name="tradeShowDrive"
+                                  checked={formData.tradeShowDrive}
+                                  onChange={handleChange}
+                                  id="tradeShowDrive"
+                                />
+                                <label className="form-check-label" htmlFor="tradeShowDrive">Yes</label>
+                              </div>
                             </div>
                           </div>
+
+                          {/* b & c — nested under a */}
                           {formData.tradeShowDrive && (
-                            <>
-                              <div className="mb-3">
-                                <label className="form-label">What is the furthest distance traveled?</label>
-                                <div className="input-group">
-                                  <input name="tradeShowDistance" className="form-control" value={formData.tradeShowDistance} onChange={handleChange} />
-                                  <span className="input-group-text">miles</span>
+                            <div className="ms-4">
+                              {/* b */}
+                              <div className="d-flex align-items-center mb-3">
+                                <div className="me-3" style={{ width: '650px' }}>
+                                  <label className="form-label mb-0">
+                                    b] What is the furthest distance traveled?
+                                  </label>
+                                </div>
+                                <div style={{ maxWidth: '200px' }}>
+                                  <div className="input-group">
+                                    <input
+                                      name="tradeShowDistance"
+                                      value={formData.tradeShowDistance}
+                                      onChange={handleChange}
+                                      className="form-control"
+                                    />
+                                    <span className="input-group-text">Miles</span>
+                                  </div>
                                 </div>
                               </div>
-                              <div className="mb-3">
-                                <label className="form-label">How many RVs do you take to the trade shows?</label>
-                                <div className="input-group">
-                                  <input name="tradeShowCount" className="form-control" value={formData.tradeShowCount} onChange={handleChange} />
-                                  <span className="input-group-text">RVs</span>
+
+                              {/* c */}
+                              <div className="d-flex align-items-center mb-3">
+                                <div className="me-3" style={{ width: '650px' }}>
+                                  <label className="form-label mb-0">
+                                    c] How many RVs do you take to the trade shows?
+                                  </label>
+                                </div>
+                                <div style={{ maxWidth: '200px' }}>
+                                  <div className="input-group">
+                                    <input
+                                      name="tradeShowCount"
+                                      value={formData.tradeShowCount}
+                                      onChange={handleChange}
+                                      className="form-control"
+                                    />
+                                    <span className="input-group-text">RVs</span>
+                                  </div>
                                 </div>
                               </div>
-                            </>
+                            </div>
                           )}
                         </div>
                       )}
@@ -706,74 +799,157 @@ return (
                       </div>
 
                       {/* 10. PERSONAL USE */}
-                      <h5 className="mt-4">10. Is there any personal use of owned RVs?</h5>
-                      <div className="mb-3">
-                        {renderYesNo('personalUse')}
+                      <div className="row align-items-center mb-3 mt-4">
+                        <div className="col-md-10">
+                          <h5 className="mb-0">10. Is there any personal use of owned RVs?</h5>
+                        </div>
+                        <div className="col-md-2">
+                          {renderYesNo('personalUse')}
+                        </div>
                       </div>
 
                       {/* 11. RV DELIVERY */}
-                      <h5 className="mt-4">11. Do you deliver RVs to your customers after sale?</h5>
-                      <div className="mb-3">
-                        {renderYesNo('delivery')}
+                      <div className="row align-items-center mb-3 mt-4">
+                        <div className="col-md-10">
+                          <h5 className="mb-0">11. Do you deliver RVs to your customers after sale?</h5>
+                        </div>
+                        <div className="col-md-2">
+                          {renderYesNo('delivery')}
+                        </div>
                       </div>
+
                       {formData.delivery === 'Yes' && (
-                        <div className="ms-4">
-                          <div className="mb-3">
-                            <label className="form-label">a. How far one-way for longest trip?</label>
-                            <div className="input-group">
-                              <input name="deliveryDistance" className="form-control" value={formData.deliveryDistance} onChange={handleChange} />
-                              <span className="input-group-text">(road miles)</span>
+                        <div className="ms-5">
+                          {/* a */}
+                          <div className="d-flex align-items-center mb-3">
+                            <div className="me-3" style={{ width: '700px' }}>
+                              <label className="form-label mb-0">a] How far one-way for longest trip?</label>
+                            </div>
+                            <div style={{ maxWidth: '200px' }}>
+                              <div className="input-group">
+                                <input
+                                  name="deliveryDistance"
+                                  className="form-control"
+                                  value={formData.deliveryDistance}
+                                  onChange={handleChange}
+                                />
+                                <span className="input-group-text">(road miles)</span>
+                              </div>
                             </div>
                           </div>
+
+                          {/* b */}
                           <div className="mb-3">
-                            <label className="form-label">b. Description of delivery process (check all that apply):</label>
+                            <label className="form-label">b] Description of delivery process (check all that apply):</label>
                             <p className="form-text">How are they transported?</p>
+
                             <div className="form-check">
-                              <input className="form-check-input" type="checkbox" name="deliveryTowed" checked={formData.deliveryTowed} onChange={handleChange} />
-                              <label className="form-check-label">Towed by Insured/Employees</label>
+                              <input
+                                className="form-check-input"
+                                type="checkbox"
+                                name="deliveryTowed"
+                                checked={formData.deliveryTowed}
+                                onChange={handleChange}
+                                id="deliveryTowed"
+                              />
+                              <label className="form-check-label" htmlFor="deliveryTowed">
+                                Towed by Insured/Employees
+                              </label>
                             </div>
                             <div className="form-check">
-                              <input className="form-check-input" type="checkbox" name="deliveryDriven" checked={formData.deliveryDriven} onChange={handleChange} />
-                              <label className="form-check-label">Driven by Insured/Employees</label>
+                              <input
+                                className="form-check-input"
+                                type="checkbox"
+                                name="deliveryDriven"
+                                checked={formData.deliveryDriven}
+                                onChange={handleChange}
+                                id="deliveryDriven"
+                              />
+                              <label className="form-check-label" htmlFor="deliveryDriven">
+                                Driven by Insured/Employees
+                              </label>
                             </div>
                             <div className="form-check">
-                              <input className="form-check-input" type="checkbox" name="deliveryTransporter" checked={formData.deliveryTransporter} onChange={handleChange} />
-                              <label className="form-check-label">Hired Transporter</label>
+                              <input
+                                className="form-check-input"
+                                type="checkbox"
+                                name="deliveryTransporter"
+                                checked={formData.deliveryTransporter}
+                                onChange={handleChange}
+                                id="deliveryTransporter"
+                              />
+                              <label className="form-check-label" htmlFor="deliveryTransporter">
+                                Hired Transporter
+                              </label>
                             </div>
                           </div>
+
+                          {/* Subsection if towed */}
                           {formData.deliveryTowed && (
-                            <>
+                            <div className="ms-4">
                               <div className="mb-3">
                                 <label className="form-label">What vehicle is used to tow these units?</label>
-                                <input name="towVehicle" className="form-control" value={formData.towVehicle} onChange={handleChange} />
+                                <input
+                                  name="towVehicle"
+                                  className="form-control"
+                                  value={formData.towVehicle}
+                                  onChange={handleChange}
+                                />
                               </div>
-                              <div className="mb-3">
-                                <label className="form-label">Is the towing vehicle covered elsewhere?</label>
-                                {renderYesNo('towingCovered')}
+                              <div className="d-flex align-items-center mb-3">
+                                <div className="me-3" style={{ width: '700px' }}>
+                                  <label className="form-label mb-0">Is the towing vehicle covered elsewhere?</label>
+                                </div>
+                                <div style={{ width: '150px' }}>
+                                  {renderYesNo('towingCovered' , 'form-check')}
+                                </div>
                               </div>
-                            </>
+                            </div>
                           )}
+
+                          {/* Subsection if driven */}
                           {formData.deliveryDriven && (
-                            <>
+                            <div className="ms-4">
                               <div className="mb-3">
                                 <label className="form-label">How does Insured/Employee driver return?</label>
                                 <div className="form-check">
-                                  <input className="form-check-input" type="checkbox" name="returnVehicleTowed" checked={formData.returnVehicleTowed} onChange={handleChange} />
-                                  <label className="form-check-label">Return vehicle towed behind RV</label>
+                                  <input
+                                    className="form-check-input"
+                                    type="checkbox"
+                                    name="returnVehicleTowed"
+                                    checked={formData.returnVehicleTowed}
+                                    onChange={handleChange}
+                                    id="returnVehicleTowed"
+                                  />
+                                  <label className="form-check-label" htmlFor="returnVehicleTowed">
+                                    Return vehicle towed behind RV
+                                  </label>
                                 </div>
                               </div>
-                              <div className="mb-3">
-                                <label className="form-label">Is the return vehicle operated on your dealer plate?</label>
-                                {renderYesNo('dealerPlate')}
+
+                              <div className="d-flex align-items-center mb-3">
+                                <div className="me-3" style={{ width: '700px' }}>
+                                  <label className="form-label mb-0">Is the return vehicle operated on your dealer plate?</label>
+                                </div>
+                                <div style={{ width: '150px' }}>
+                                  {renderYesNo('dealerPlate'  , 'form-check')}
+                                </div>
                               </div>
+
                               <div className="mb-3">
                                 <label className="form-label">Other (describe):</label>
-                                <input name="otherReturn" className="form-control" value={formData.otherReturn} onChange={handleChange} />
+                                <input
+                                  name="otherReturn"
+                                  className="form-control"
+                                  value={formData.otherReturn}
+                                  onChange={handleChange}
+                                />
                               </div>
-                            </>
+                            </div>
                           )}
                         </div>
                       )}
+
 
                       <div className="text-center">
                         <button type="submit" className="btn btn-primary btn-lg">Submit Application</button>
